@@ -1,13 +1,15 @@
 import { useEffect } from "react";
-import getPlayList from "./api";
+import usePlaylists from "./hooks/usePlalists";
 
 const App = () => {
 
+  const {getPlaylistById, playlists} = usePlaylists();
+
   useEffect(() => {
-    getPlayList(`PLHiZ4m8vCp9M6HVQv7a36cp8LKzyHIePr`, "", []).then((res) => {
-      console.log(res);
-    });
+    getPlaylistById("PLHiZ4m8vCp9M6HVQv7a36cp8LKzyHIePr");
   }, [])
+
+  console.log(playlists);
 
   return (
     <div>

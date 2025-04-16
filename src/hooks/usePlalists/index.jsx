@@ -1,4 +1,5 @@
 import { useState } from "react"
+import getPlayList from "../../api";
 
 
 const usePlaylists = () =>{
@@ -8,12 +9,12 @@ const usePlaylists = () =>{
         favorites: [],
     });
 
-    const getPlaylistById = async(playlistId, force = flase)=>{
+    const getPlaylistById = async(playlistId, force=false)=>{
         if(state.playlists[playlistId] && !force){
             return;
         }
 
-        let result = await getPlaylist(playlistId);
+        let result = await getPlayList(playlistId);
 
         let cid,ct;
 
@@ -69,7 +70,7 @@ const usePlaylists = () =>{
 
 
     const getPlaylistsByIds = (ids = [])=>{
-        return ids.map((id)= state.playlists[id]);
+        return ids.map((id)=>state.playlists[id]);
     };
 
     return {
