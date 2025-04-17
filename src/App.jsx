@@ -1,5 +1,7 @@
 import { useEffect } from "react";
+import CssBaseline from '@mui/material/CssBaseline';
 import usePlaylists from "./hooks/usePlalists";
+import { Button } from "@mui/material";
 
 const App = () => {
 
@@ -16,9 +18,13 @@ const App = () => {
   }
 
   return (
-    <div>
-      helllo
-    </div>
+    <>
+    <CssBaseline />
+      <div>
+        <h1>Hello World</h1>
+        <Button variant="contained">Hello</Button>
+      </div>
+    </>
   )
 }
 
