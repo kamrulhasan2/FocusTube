@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const key = process.env.API_KEY; not working at this time
-const key = "AIzaSyBkF4I7wvxP0cDblptFjgGzr3Reaexoy50";
+const key = import.meta.env.VITE_API_KEY; // fixed
+
 
 
 const getPlayList = async (playlistId, pageToken = " ", result = []) => {

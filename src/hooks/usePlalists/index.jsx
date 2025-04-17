@@ -2,19 +2,31 @@ import { useState } from "react"
 import getPlayList from "../../api";
 
 
-const usePlaylists = () =>{
+const usePlaylists = () => {
     const [state, setState] = useState({
         playlists: {},
         recentPlaylist: [],
         favorites: [],
     });
 
-    const getPlaylistById = async(playlistId, force=false)=>{
-        if(state.playlists[playlistId] && !force){
+    const [error, setError] = useState(" ");
+    const [loading, setLoading] = useState(false);
+
+    const getPlaylistById = async (playlistId, force = false) => {
+        if (state.playlists[playlistId] && !force) {
             return;
         }
 
-        let result = await getPlayList(playlistId);
+
+        let result;
+        try{
+            setLoading(true);
+            result = await getPlayList(playlistId);
+        }catch(err){
+            setError(err.response?.data?.error?.message || 'Something went wrong');
+        }finally{
+            setLoading(false);
+        }
 
         let cid,ct;
 
@@ -54,29 +66,31 @@ const usePlaylists = () =>{
     };
 
 
-    const addToFavorites = (playlistId)=>{
-        setState((prev)=>({
+    const addToFavorites = (playlistId) => {
+        setState((prev) => ({
             ...prev,
             favorites: [...prev, playlistId]
         }));
     };
 
-    const addToRecent = (playlistId)=>{
-        setState((prev)=>({
+    const addToRecent = (playlistId) => {
+        setState((prev) => ({
             ...prev,
             recentPlaylist: [...prev, playlistId]
         }));
     };
 
 
-    const getPlaylistsByIds = (ids = [])=>{
-        return ids.map((id)=>state.playlists[id]);
+    const getPlaylistsByIds = (ids = []) => {
+        return ids.map((id) => state.playlists[id]);
     };
 
     return {
-        playlists : state.playlists,
+        playlists: state.playlists,
         favorites: getPlaylistsByIds(state.favorites),
-        recentPlaylists:  getPlaylistsByIds(state.recentPlaylist),
+        recentPlaylists: getPlaylistsByIds(state.recentPlaylist),
+        error,
+        loading,
         getPlaylistById,
         addToFavorites,
         addToRecent

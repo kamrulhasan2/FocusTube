@@ -3,13 +3,17 @@ import usePlaylists from "./hooks/usePlalists";
 
 const App = () => {
 
-  const {getPlaylistById, playlists} = usePlaylists();
+  const {getPlaylistById, playlists,error} = usePlaylists();
 
   useEffect(() => {
     getPlaylistById("PLHiZ4m8vCp9M6HVQv7a36cp8LKzyHIePr");
   }, [])
 
   console.log(playlists);
+
+  if(error){
+    console.log('Error: ', error);
+  }
 
   return (
     <div>
