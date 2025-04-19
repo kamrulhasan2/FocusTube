@@ -9,60 +9,33 @@ const usePlaylists = () => {
         favorites: [],
     });
 
-    const [error, setError] = useState(" ");
+    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
 
     const getPlaylistById = async (playlistId, force = false) => {
         if (state.playlists[playlistId] && !force) {
             return;
         }
+       
 
-
-        let result;
-        try{
-            setLoading(true);
-            result = await getPlayList(playlistId);
-        }catch(err){
-            setError(err.response?.data?.error?.message || 'Something went wrong');
-        }finally{
-            setLoading(false);
-        }
-
-        let cid,ct;
-
-        result = result.map((item)=>{
-            const {channelId,title,description,thumbnails: {medium}, channelTitle} = item.snippet;
-
-            if(!cid){
-                cid = channelId;
-            }
-
-            if(!ct){
-                ct = channelTitle;
-            }
-
-            return {
-                title,
-                description,
-                thumbnail: medium,
-                contentDetails: item.contentDetails
-            }
-        });
-
-
+       try{
+        setLoading(true);
+        const playlist = await getPlayList(playlistId);
+        console.log('playlist',playlist);
+        setError('');
         setState((prev)=>({
             ...prev,
             playlists: {
-               ...prev.playlists,
-               [playlistId]: {
-                items: result,
-                playlistId,
-                channelId: cid,
-                channelTitle: ct
-               } 
+                ...prev.playlists,
+                [playlistId]: playlist,
             }
         }));
-
+       }catch(err){
+        console.error('error',err);
+        setError(err.response?.data?.error?.message || "Something went wrong");
+       }finally{
+        setLoading(false);
+       }
     };
 
 
