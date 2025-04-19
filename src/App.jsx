@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import CssBaseline from '@mui/material/CssBaseline';
 import usePlaylists from "./hooks/usePlalists";
 import { Button } from "@mui/material";
+import Navbar from "./components/navbar";
 
 const App = () => {
 
@@ -21,6 +22,7 @@ const App = () => {
     <>
     <CssBaseline />
       <div>
+        <Navbar />
         <h1>Hello World</h1>
         <Button variant="contained">Hello</Button>
       </div>
