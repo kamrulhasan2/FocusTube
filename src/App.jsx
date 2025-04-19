@@ -8,12 +8,6 @@ const App = () => {
 
   const {getPlaylistById, playlists,error} = usePlaylists();
 
-  useEffect(() => {
-    getPlaylistById("PLHiZ4m8vCp9M6HVQv7a36cp8LKzyHIePr");
-  }, [])
-
-  console.log(playlists);
-
   if(error){
     console.log('Error: ', error);
   }
@@ -23,8 +17,6 @@ const App = () => {
     <CssBaseline />
       <div>
         <Navbar getPlaylistById={getPlaylistById} />
-        <h1>Hello World</h1>
-        <Button variant="contained">Hello</Button>
       </div>
     </>
   )
