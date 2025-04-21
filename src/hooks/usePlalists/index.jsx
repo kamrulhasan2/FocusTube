@@ -1,16 +1,34 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import getPlayList from "../../api";
+import storage from "../../utils/Storage";
 
+const storageKey = import.meta.env.VITE_STORAGE_KEY;
+
+const INITIAL_STATE = {
+    playlists: {},
+    recentPlaylist: [],
+    favorites: [],
+}
 
 const usePlaylists = () => {
-    const [state, setState] = useState({
-        playlists: {},
-        recentPlaylist: [],
-        favorites: [],
-    });
+    const [state, setState] = useState(INITIAL_STATE);
 
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+
+    useEffect(()=>{
+        const state = storage.get(storageKey);
+        if(state){
+            setState({...state})
+        }
+    },[]);
+
+    useEffect(()=>{
+        if(state !== INITIAL_STATE){
+           storage.save(storageKey, state);
+        }
+    },[state]);
+
 
     const getPlaylistById = async (playlistId, force = false) => {
         if (state.playlists[playlistId] && !force) {
