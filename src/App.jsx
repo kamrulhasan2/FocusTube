@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { BrowserRouter } from "react-router";
 import CssBaseline from '@mui/material/CssBaseline';
 import usePlaylists from "./hooks/usePlalists";
 import { Button, Container, Grid } from "@mui/material";
@@ -17,9 +18,9 @@ const App = () => {
   }
 
   return (
-    <>
+    <BrowserRouter>
     <CssBaseline />
-    
+
     <Navbar getPlaylistById={getPlaylistById} />
       <Container maxWidth="lg">
        
@@ -44,7 +45,7 @@ const App = () => {
         }
 
       </Container>
-    </>
+    </BrowserRouter>
   )
 }
 
