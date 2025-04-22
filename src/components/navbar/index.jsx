@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Container, Stack } from '@mui/material';
 import PlaylistForm from '../playlist-form';
+import { Link } from 'react-router';
 
 const  Navbar = ({getPlaylistById}) => {
     const [open,setOpen] = useState(false);
@@ -30,9 +31,11 @@ const  Navbar = ({getPlaylistById}) => {
         <Container maxWidth="lg">
             <Toolbar>
               <Stack  sx={{ flexGrow: 1 }}>
-                <Typography variant="h5">
-                    FocusTube
-                </Typography>
+                <Link to="/" style={{ textDecoration: 'none', color: 'white' }}>
+                  <Typography variant="h5">
+                      FocusTube
+                  </Typography>
+                </Link>
                 <Typography  variant="body1">
                     Learn without distractions
                 </Typography>
