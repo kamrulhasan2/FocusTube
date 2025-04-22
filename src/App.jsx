@@ -19,8 +19,10 @@ const App = () => {
   return (
     <>
     <CssBaseline />
+    
+    <Navbar getPlaylistById={getPlaylistById} />
       <Container maxWidth="lg">
-        <Navbar getPlaylistById={getPlaylistById} />
+       
         
         {
           playlistArray.length > 0 &&(
