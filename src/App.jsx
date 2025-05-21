@@ -5,11 +5,18 @@ import usePlaylists from "./hooks/usePlalists";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import Navbar from "./components/navbar";
 import PlaylistCardItem from "./components/playlist-card-item";
+import { useStoreActions } from "easy-peasy";
 
-
+const playlistId = 'PL_XxuZqN0xVD0op-QDEgyXFA4fRPChvkl';
 // Create a Homepage component for testing purposes
 
 const Homepage = ({playlistArray})=> {
+  const playlist = useStoreActions(actions => actions.playlist);
+  useEffect(()=>{
+    playlist.getPlaylistData(playlistId);
+    
+  },[])
+
   return(
     <Container maxWidth="lg">
             
