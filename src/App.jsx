@@ -25,7 +25,7 @@ const Homepage = ({playlistArray})=> {
         <Grid container alignItems={'stretch'}>
           {
             playlistArray.map((item)=>(
-              <Grid item xs={12} md={6} lg={4} mb={2}>
+              <Grid key={item.playlistId} item xs={12} md={6} lg={4} mb={2}>
                 <PlaylistCardItem 
                   key={item.playlistId}
                   playlistId={item.playlistId}
