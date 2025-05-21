@@ -14,7 +14,7 @@ const playlistModel = persist({
     setError: action((state,payload)=>{
         state.error = payload;
     }),
-    getPlaylis: thunk(  // destructuring the (actions,payload,helper)
+    getPlaylist: thunk(  // destructuring the (actions,payload,helper)
         async ({addPlaylist,setError,setLoading} , playlistId, {getState} ) => {
             //helper.getState() = When executed it will provide the state that is local to the thunk.
             if(getState().data[playlistId]){

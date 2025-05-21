@@ -11,9 +11,9 @@ const playlistId = 'PL_XxuZqN0xVD0op-QDEgyXFA4fRPChvkl';
 // Create a Homepage component for testing purposes
 
 const Homepage = ({playlistArray})=> {
-  const playlist = useStoreActions(actions => actions.playlist);
+  const playlists = useStoreActions(actions => actions.playlists);
   useEffect(()=>{
-    playlist.getPlaylistData(playlistId);
+    playlists.getPlaylist(playlistId);
     
   },[])
 

@@ -3,7 +3,7 @@ import playlistModel from './playlist.model';
 
 
 const store = createStore({
-    playlist: playlistModel,
+    playlists: playlistModel,
 });
 
 export default store;
