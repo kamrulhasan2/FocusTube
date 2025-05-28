@@ -1,8 +1,11 @@
 import axios from 'axios';
+import { extractPlaylistId } from '../utils/extractLinksUtils';
 
 const key = import.meta.env.VITE_API_KEY; // fixed
 
 const getPlaylistItem = async(playlistId, pageToken = " ", result = []) =>{
+
+   console.log('After playlist id ==> ',playlistId);
    try {
     const URL = `https://www.googleapis.com/youtube/v3/playlistItems?key=${key}&part=snippet,contentDetails&maxResults=50&playlistId=${playlistId}&pageToken=${pageToken}`;
     const {data} = await axios.get(URL);
@@ -20,8 +23,12 @@ const getPlaylistItem = async(playlistId, pageToken = " ", result = []) =>{
 };
 
 const getPlayList = async (playlistId) => {
+
+    playlistId = extractPlaylistId(playlistId);
     const URL = `https://youtube.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${key}`;
     const {data} = await axios.get(URL);
+    
+
     if(!data.items?.length){
         throw new Error('Playlist not found');
     }
