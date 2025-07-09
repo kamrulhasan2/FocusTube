@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useStoreRehydrated, useStoreActions } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import Header from './components/Header';
+import { Router, Routes } from 'react-router';
 
 
 const theme = createTheme({
@@ -32,9 +34,9 @@ function App() {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <WaitForStateRehydration>
-         <div>
-          hello FocusTube2.0.1
-         </div>
+           <Router>
+              <Header />
+           </Router>
         </WaitForStateRehydration>
       </ThemeProvider>
   );
