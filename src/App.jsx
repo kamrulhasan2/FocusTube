@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useStoreRehydrated, useStoreActions, StoreProvider } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Header from './components/Header';
-import { Router, Routes, Route } from 'react-router';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import { store } from './store';
