@@ -1,7 +1,6 @@
 import { useEffect } from "react";
 import { BrowserRouter, Route, Routes, useParams } from "react-router";
 import CssBaseline from '@mui/material/CssBaseline';
-import usePlaylists from "./hooks/usePlalists";
 import { Button, Container, Grid, Typography } from "@mui/material";
 import Navbar from "./components/navbar";
 import PlaylistCardItem from "./components/playlist-card-item";
