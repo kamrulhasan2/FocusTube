@@ -1,115 +1,43 @@
-import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useParams } from "react-router";
-import CssBaseline from '@mui/material/CssBaseline';
-import { Button, Container, Grid, Typography } from "@mui/material";
-import Navbar from "./components/navbar";
-import PlaylistCardItem from "./components/playlist-card-item";
-import { useStoreActions } from "easy-peasy";
+import { useEffect } from 'react';
+import { useStoreRehydrated, useStoreActions } from 'easy-peasy';
+import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 
-const playlistId = 'PL_XxuZqN0xVD0op-QDEgyXFA4fRPChvkl';
-// Create a Homepage component for testing purposes
 
-const Homepage = ({playlistArray})=> {
-  const playlists = useStoreActions(actions => actions.playlists);
-  useEffect(()=>{
-    playlists.getPlaylist(playlistId);
-    
-  },[])
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+    secondary: { main: '#dc004e' },
+  },
+});
 
-  return(
-    <Container maxWidth="lg">
-            
-    {
-      playlistArray.length > 0 &&(
-        <Grid container alignItems={'stretch'}>
-          {
-            playlistArray.map((item)=>(
-              <Grid key={item.playlistId} item xs={12} md={6} lg={4} mb={2}>
-                <PlaylistCardItem 
-                  key={item.playlistId}
-                  playlistId={item.playlistId}
-                  playlistThumbnail={item.playlistThumbnail}
-                  playlistTitle={item.playlistTitle}
-                  channelTitle={item.channelTitle}
-                />
-              </Grid>
-            ))
-          }
-        </Grid>
-      )
+function WaitForStateRehydration({ children }) { 
+  const isRehydrated = useStoreRehydrated();
+  const initializeStore = useStoreActions((actions) => actions.app.initializeStore);
+
+  useEffect(() => {
+    if (isRehydrated) {
+      initializeStore();
     }
+  }, [isRehydrated, initializeStore]);
 
-  </Container>
-  )
-}
-
-// creating a NotFound component for testing purposes
-
-const NotFound = () => {
-  return(
-    <Container maxWidth="lg">
-      <Typography variant="h1" align="center" mt={5}>
-        404 Not Found
-      </Typography>
+  return isRehydrated ? children : (
+    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <CircularProgress />
     </Container>
-  )
+  );
 }
 
-
-// creating a PlayerPage component for testing purposes
-
-const PlayerPage = ({playlists}) => {
-  const {playlistId} = useParams();
-  const currentPlaylist = playlists[playlistId];
-
-  console.log(currentPlaylist);
-
-  if(!currentPlaylist) return;
-
-  return(
-    <Container maxWidth="lg">
-      <Typography variant="h2" align="center" mt={5}>
-        {currentPlaylist.playlistTitle}
-      </Typography>
-
-      <Typography variant="h4" align="center" mt={3}>
-        <img src={currentPlaylist.playlistThumbnail.url} alt={currentPlaylist.playlistTitle} height={350} width={720}/>  
-      </Typography>
-
-      <Typography variant="body1" align="center" mt={3}>
-        {currentPlaylist.playlistDescription}
-      </Typography>
-    </Container>
-  )
-}
-
-
-
-const App = () => {
-
-  const {getPlaylistById, playlists,error} = usePlaylists();
-
-  const playlistArray = Object.values(playlists);
-
-  if(error){
-    console.log('Error: ', error);
-  }
-
+function App() {
   return (
-    <BrowserRouter>
-      <CssBaseline />
-      <Navbar getPlaylistById={getPlaylistById} />
-
-      <Routes>
-        <Route path="/" element={<Homepage playlistArray={playlistArray} />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/player/:playlistId" 
-          element={<PlayerPage playlists={playlists} />} />
-      </Routes>
-
-     
-    </BrowserRouter>
-  )
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <WaitForStateRehydration>
+         <div>
+          hello FocusTube2.0.1
+         </div>
+        </WaitForStateRehydration>
+      </ThemeProvider>
+  );
 }
 
 export default App;
