@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 import { useStoreRehydrated, useStoreActions } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Header from './components/Header';
-import { Router, Routes } from 'react-router';
+import { Router, Routes, Route } from 'react-router';
 import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
 
 
 const theme = createTheme({
@@ -37,6 +38,9 @@ function App() {
         <WaitForStateRehydration>
            <Router>
               <Header />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                </Routes>
               <Footer />
            </Router>
         </WaitForStateRehydration>
