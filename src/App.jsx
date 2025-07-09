@@ -1,10 +1,11 @@
 import { useEffect } from 'react';
-import { useStoreRehydrated, useStoreActions } from 'easy-peasy';
+import { useStoreRehydrated, useStoreActions, StoreProvider } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Header from './components/Header';
 import { Router, Routes, Route } from 'react-router';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
+import { store } from './store';
 
 
 const theme = createTheme({
@@ -33,18 +34,20 @@ function WaitForStateRehydration({ children }) {
 
 function App() {
   return (
+    <StoreProvider store={store}>
       <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <WaitForStateRehydration>
-           <Router>
-              <Header />
-                <Routes>
-                  <Route path="/" element={<HomePage />} />
-                </Routes>
-              <Footer />
-           </Router>
-        </WaitForStateRehydration>
+          <CssBaseline />
+          <WaitForStateRehydration>
+            <Router>
+                <Header />
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                  </Routes>
+                <Footer />
+            </Router>
+          </WaitForStateRehydration>        
       </ThemeProvider>
+    </StoreProvider>
   );
 }
 
