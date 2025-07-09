@@ -3,6 +3,7 @@ import { useStoreRehydrated, useStoreActions } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
 import Header from './components/Header';
 import { Router, Routes } from 'react-router';
+import Footer from './components/Footer';
 
 
 const theme = createTheme({
@@ -36,6 +37,7 @@ function App() {
         <WaitForStateRehydration>
            <Router>
               <Header />
+              <Footer />
            </Router>
         </WaitForStateRehydration>
       </ThemeProvider>
