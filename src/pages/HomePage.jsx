@@ -7,6 +7,7 @@ import { useStoreState } from '../store';
 const HomePage = () => { 
   const lastWatched = useStoreState(state => state.app.lastWatchedPlaylistId);
   const playlists = useStoreState(state => state.app.playlists);
+  console.log('HomePage playlists:', playlists);
   const lastWatchedPlaylist = lastWatched ? playlists.find(p => p.id === lastWatched) : null;
 
   return (

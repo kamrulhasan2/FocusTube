@@ -7,6 +7,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import { store } from './store';
 import NotFoundPage from './pages/NotFoundPage';
+import SavedPlaylistsPage from './pages/SavePlaylistsPage';
 
 
 const theme = createTheme({
@@ -43,6 +44,7 @@ function App() {
                 <Header />
                   <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/saved" element={<SavedPlaylistsPage />} />
                     <Route path="/404" element={<NotFoundPage />} />
                     <Route path="*" element={<Navigate replace to="/404" />} />
                   </Routes>
