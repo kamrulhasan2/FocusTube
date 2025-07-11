@@ -6,7 +6,7 @@ import PlaylistCard from '../components/PlaylistCard';
 
 const FavoritesPage = () => {
   const { playlists, favorites } = useStoreState((state) => state.app);
-  const { toggleFavoritePlaylist } = useStoreActions((actions) => actions.app);
+  const { toggleFavoritePlaylist, setLastWatched } = useStoreActions((actions) => actions.app);
 
   const favoritePlaylists = playlists.filter(p => favorites.includes(p.id));
 
@@ -35,6 +35,7 @@ const FavoritesPage = () => {
             key={playlist.id}
             playlist={playlist}
             onRemove={toggleFavoritePlaylist}
+            onPlaylistClick={setLastWatched}
           />
         ))}
       </List>

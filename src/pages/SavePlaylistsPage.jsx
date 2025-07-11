@@ -5,7 +5,7 @@ import PlaylistCard from '../components/PlaylistCard';
 
 const SavedPlaylistsPage = () => {
   const playlists = useStoreState((state) => state.app.playlists);
-  const { removePlaylistData } = useStoreActions((actions) => actions.app);
+  const { removePlaylistData, setLastWatched } = useStoreActions((actions) => actions.app);
 
   if (!playlists || playlists.length === 0) {
     return (
@@ -34,6 +34,7 @@ const SavedPlaylistsPage = () => {
                 key={playlist.id}
                 playlist={playlist}
                 onRemove={removePlaylistData}
+                onPlaylistClick={setLastWatched}
             />
             ))}
       </List>

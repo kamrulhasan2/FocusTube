@@ -7,6 +7,7 @@ export const playlistsModel = persist(
     playlists: [],
     favorites: [], // Array of playlist IDs
     lastWatchedPlaylistId: null,
+    playbackState: {}, // { playlistId: { videoId, timestamp } }
     isLoading: false,
     error: null,
 
@@ -32,6 +33,7 @@ export const playlistsModel = persist(
       if (state.lastWatchedPlaylistId === playlistId) {
         state.lastWatchedPlaylistId = null;
       }
+      delete state.playbackState[playlistId]; // Clean up playback state
     }),
     toggleFavoritePlaylist: action((state, playlistId) => {
       const index = state.favorites.indexOf(playlistId);
@@ -45,6 +47,9 @@ export const playlistsModel = persist(
     }),
     setLastWatched: action((state, playlistId) => {
       state.lastWatchedPlaylistId = playlistId;
+    }),
+    updatePlaybackState: action((state, { playlistId, videoId, timestamp }) => {
+      state.playbackState[playlistId] = { videoId, timestamp };
     }),
 
     // // Thunks
@@ -78,6 +83,7 @@ export const playlistsModel = persist(
 
         if (playlistData) {
           actions.addPlaylistData(playlistData);
+          actions.setLastWatched(playlistId); // Set last watched AFTER adding data
         } else {
           actions.setError(`Playlist with ID ${playlistId} not found or API error.`);
         }

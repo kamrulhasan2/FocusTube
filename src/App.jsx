@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { useStoreRehydrated, useStoreActions, StoreProvider } from 'easy-peasy';
 import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
@@ -8,9 +8,10 @@ import HomePage from './pages/HomePage';
 import { store } from './store';
 import NotFoundPage from './pages/NotFoundPage';
 import SavedPlaylistsPage from './pages/SavePlaylistsPage';
-import PlaylistViewerPage from './pages/PlaylistViewerPage';
 import FavoritesPage from './pages/FavoritesPage';
 import BlogPage from './pages/BlogPage';
+
+const PlaylistViewerPage = lazy(() => import('./pages/PlaylistViewerPage'));
 
 const theme = createTheme({
   palette: {
@@ -44,15 +45,17 @@ function App() {
           <WaitForStateRehydration>
             <Router>
                 <Header />
-                  <Routes>
-                    <Route path="/" element={<HomePage />} />
-                    <Route path="/playlist/:playlistId" element={<PlaylistViewerPage />} />
-                    <Route path="/blog" element={<BlogPage />} />
-                    <Route path="/saved" element={<SavedPlaylistsPage />} />
-                    <Route path="/favorites" element={<FavoritesPage />} />
-                    <Route path="/404" element={<NotFoundPage />} />
-                    <Route path="*" element={<Navigate replace to="/404" />} />
-                  </Routes>
+                  <Suspense fallback={<Container sx={{ textAlign: 'center', py: 5 }}><CircularProgress /></Container>}>
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/playlist/:playlistId" element={<PlaylistViewerPage />} />
+                      <Route path="/blog" element={<BlogPage />} />
+                      <Route path="/saved" element={<SavedPlaylistsPage />} />
+                      <Route path="/favorites" element={<FavoritesPage />} />
+                      <Route path="/404" element={<NotFoundPage />} />
+                      <Route path="*" element={<Navigate replace to="/404" />} />
+                    </Routes>
+                  </Suspense>
                 <Footer />
             </Router>
           </WaitForStateRehydration>        
