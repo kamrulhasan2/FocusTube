@@ -10,6 +10,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import SavedPlaylistsPage from './pages/SavePlaylistsPage';
 import PlaylistViewerPage from './pages/PlaylistViewerPage';
 import FavoritesPage from './pages/FavoritesPage';
+import BlogPage from './pages/BlogPage';
 
 const theme = createTheme({
   palette: {
@@ -46,6 +47,7 @@ function App() {
                   <Routes>
                     <Route path="/" element={<HomePage />} />
                     <Route path="/playlist/:playlistId" element={<PlaylistViewerPage />} />
+                    <Route path="/blog" element={<BlogPage />} />
                     <Route path="/saved" element={<SavedPlaylistsPage />} />
                     <Route path="/favorites" element={<FavoritesPage />} />
                     <Route path="/404" element={<NotFoundPage />} />
