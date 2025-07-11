@@ -93,7 +93,7 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
                             playerState === window.YT.PlayerState.ENDED);
 
   return (
-    <Box sx={{ position: 'relative', paddingTop: '56.25%', backgroundColor: '#000' }} ref={playerContainerRef}>
+    <Box sx={{ position: 'relative', height: '100%', backgroundColor: '#000' }}>
       {!isPlayerReady && ( // Optional: Show a loader until player is ready
         <Box sx={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -108,8 +108,9 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
         opts={playerOpts}
         onReady={onPlayerReady}
         onStateChange={handlePlayerStateChange}
-        iframeClassName='absolute top-0 left-0 w-full h-full'
-        ref={playerRef}
+        // Do not use onEnd directly if onStateChange handles YT.PlayerState.ENDED
+        iframeClassName="absolute top-0 left-0 w-full h-full"
+        className="h-full"
         key={videoId} // Adding key helps React re-initialize if videoId changes drastically
       />
       {shouldShowOverlay && (
@@ -131,12 +132,12 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
             color: 'white',
           }}
         >
-    
+          {/* <PlayArrowIcon sx={{ fontSize: '5rem', mb: 1 }} /> */}
           <Typography variant="h6">
             {playerState === window.YT.PlayerState.ENDED ? "Video Ended" : "Click to Play"}
           </Typography>
           <Typography variant="body2">Happy Learning!</Typography>
-          <Typography variant="body2">--Kamrul Hasan</Typography>
+          <Typography variant="body2">--Kamrul Hasan--</Typography>
         </Box>
       )}
     </Box>

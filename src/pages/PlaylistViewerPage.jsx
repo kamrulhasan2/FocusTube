@@ -8,6 +8,8 @@ import { Typography, Container, CircularProgress, Alert, Box, Button, IconButton
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import RefreshIcon from '@mui/icons-material/Refresh';
+import SkipNextIcon from '@mui/icons-material/SkipNext';
+import SkipPreviousIcon from '@mui/icons-material/SkipPrevious';
 
 const PlaylistViewerPage = () => { 
   const { playlistId } = useParams();
@@ -99,12 +101,18 @@ const PlaylistViewerPage = () => {
             />
           )}
         </Box>
-        <Box sx={{ width: { xs: '100%', md: '350px' }, height: '100%', overflowY: 'auto' }}>
-          <VideoList
-            videos={currentPlaylist.videos}
-            currentVideoId={currentVideoId}
-            onSelectVideo={handleSelectVideo}
-          />
+        <Box sx={{ width: { xs: '100%', md: '350px' }, height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1, borderBottom: '1px solid #ddd' }}>
+            <Button onClick={handlePreviousVideo} startIcon={<SkipPreviousIcon />}>Previous</Button>
+            <Button onClick={handleNextVideo} endIcon={<SkipNextIcon />}>Next</Button>
+          </Box>
+          <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
+            <VideoList
+              videos={currentPlaylist.videos}
+              currentVideoId={currentVideoId}
+              onSelectVideo={handleSelectVideo}
+            />
+          </Box>
         </Box>
       </Box>
     </Container>
