@@ -5,8 +5,11 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="h6" component={RouterLink} to="/" sx={{ flexGrow: 1, color: 'inherit', textDecoration: 'none' }}>
-          FocusTube
+        <Typography variant="subtitle1" component={RouterLink} to="/" sx={{ flexGrow: 1, color: 'inherit', textDecoration: 'none',padding: '10px', lineHeight: '0.95' }}>
+         FocusTube <br />
+          <hr style={{ margin: '5px 0', border: '1px dotted', borderColor: '#d7b7b7', width: "145px" }} />
+          <small>Learn Without Distraction</small>
+
         </Typography>
         <Box>
           <Button color="inherit" component={RouterLink} to="/">Home</Button>
