@@ -21,7 +21,7 @@ const BlogPage = () => {
           </Typography>
           <Box sx={{ my: 2, p: 2, bgcolor: 'grey.100', borderRadius: 1, border: '1px solid', borderColor: 'grey.300' }}>
             <Typography variant="caption" display="block">উদাহরণ URL:</Typography>
-            <Typography component="code">http://localhost:5174/playlist/PLUvx2CKOD1pllH1JY-F2GgavwYPiQWKyC</Typography>
+            <Typography component="code">https://www.youtube.com/playlist?list=PLUvx2CKOD1pllH1JY-F2GgavwYPiQWKyC</Typography>
             <Typography variant="caption" display="block" sx={{ mt: 1 }}>উদাহরণ ID:</Typography>
             <Typography component="code">PLUvx2CKOD1pllH1JY-F2GgavwYPiQWKyC</Typography>
           </Box>
@@ -69,7 +69,7 @@ const BlogPage = () => {
         <Box sx={{ my: 4 }}>
           <Typography variant="h5" component="h2" gutterBottom>ধাপ ৫: প্লেলিস্ট ফেভারিট করুন</Typography>
           <Typography variant="body1">
-            প্লেয়ার পেজে আপনি একটি হার্ট (heart) আইকন দেখতে পাবেন। এটিতে ক্লিক করে আপনি একটি প্লেলিস্টকে ফেভারিট হিসেবে চিহ্নিত করতে পারেন। আপনার সমস্ত ফেভারিট প্লেলিস্ট খুঁজে পেতে হেডারের "Favorites" লিঙ্কে ক্লিক করুন। এটি আপনার সবচেয়ে গুরুত্বপূর্ণ কোর্সগুলোকে হাতের কাছে রাখার জন্য খুবই সুবিধাজনক।
+            প্লেয়ার পেজে আপনি একটি হার্ট (heart)<span role="img" aria-label="heart">❤️</span> আইকন দেখতে পাবেন। এটিতে ক্লিক করে আপনি একটি প্লেলিস্টকে ফেভারিট হিসেবে চিহ্নিত করতে পারেন। আপনার সমস্ত ফেভারিট প্লেলিস্ট খুঁজে পেতে হেডারের "Favorites" লিঙ্কে ক্লিক করুন। এটি আপনার সবচেয়ে গুরুত্বপূর্ণ কোর্সগুলোকে হাতের কাছে রাখার জন্য খুবই সুবিধাজনক।
           </Typography>
         </Box>
 
