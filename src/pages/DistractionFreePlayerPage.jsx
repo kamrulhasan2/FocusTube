@@ -1,7 +1,5 @@
-import React from 'react';
 import YouTube from 'react-youtube';
 import { Box } from '@mui/material';
-
 
 const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => { 
   const playerOpts = { // No YouTubeProps['opts'] needed
@@ -27,7 +25,6 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
         onEnd={onEnded}
         iframeClassName="absolute top-0 left-0 w-full h-full"
       />
-
     </Box>
   );
 };

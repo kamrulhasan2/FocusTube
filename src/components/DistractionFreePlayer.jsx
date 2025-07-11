@@ -3,8 +3,6 @@ import YouTube from 'react-youtube';
 import { Box, Typography, CircularProgress} from '@mui/material';
 
 
-
-
 const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
   const [showOverlay, setShowOverlay] = useState(false);
   const [playerState, setPlayerState] = useState(null);
@@ -95,7 +93,7 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
                             playerState === window.YT.PlayerState.ENDED);
 
   return (
-    <Box sx={{ position: 'relative', paddingTop: '56.25%', backgroundColor: '#000' }}>
+    <Box sx={{ position: 'relative'}} ref={playerContainerRef}>
       {!isPlayerReady && ( // Optional: Show a loader until player is ready
         <Box sx={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -111,7 +109,9 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
         onReady={onPlayerReady}
         onStateChange={handlePlayerStateChange}
         // Do not use onEnd directly if onStateChange handles YT.PlayerState.ENDED
-        iframeClassName="absolute top-0 left-0 w-full h-full"
+        ref={playerRef}
+        style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        
         key={videoId} // Adding key helps React re-initialize if videoId changes drastically
       />
       {shouldShowOverlay && (
@@ -133,7 +133,7 @@ const DistractionFreePlayer = ({ videoId, onNext, onPrevious, onEnded }) => {
             color: 'white',
           }}
         >
-          {/* <PlayArrowIcon sx={{ fontSize: '5rem', mb: 1 }} /> */}
+    
           <Typography variant="h6">
             {playerState === window.YT.PlayerState.ENDED ? "Video Ended" : "Paused"}
           </Typography>
