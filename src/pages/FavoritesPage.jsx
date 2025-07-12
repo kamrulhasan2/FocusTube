@@ -13,8 +13,8 @@ const FavoritesPage = () => {
   if (!favoritePlaylists || favoritePlaylists.length === 0) {
     return (
       <Container sx={{ py: 7, paddingBlockEnd: '180px', textAlign: 'center' }}>
-        <Typography variant="h5">No Favorite Playlists</Typography>
-        <Typography>
+        <Typography variant="h5" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }}>No Favorite Playlists</Typography>
+        <Typography sx={{ fontSize: { xs: '0.9rem', md: '1rem' } }}>
           Mark some playlists as favorites to see them here.
         </Typography>
         <Button sx={{ m: 5 }} variant="contained" component={Link} to="/">
@@ -26,7 +26,7 @@ const FavoritesPage = () => {
 
   return (
     <Container sx={{ py: 4 }}>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ fontSize: { xs: '1.5rem', md: '2.125rem' } }}>
         Favorite Playlists
       </Typography>
       <List>
