@@ -63,6 +63,13 @@ const DistractionFreePlayer = forwardRef(({ videoId, onNext, onPrevious, onEnded
   };
 
   useEffect(() => {
+    if (playerRef.current && videoId) {
+      setIsPlayerReady(false); // Reset player ready state
+      playerRef.current.loadVideoById(videoId, startSeconds || 0);
+    }
+  }, [videoId, startSeconds]);
+
+  useEffect(() => {
     const updateFullscreenStatus = () => {
       setIsActuallyFullscreen(!!document.fullscreenElement);
     };
@@ -77,7 +84,7 @@ const DistractionFreePlayer = forwardRef(({ videoId, onNext, onPrevious, onEnded
                             playerState === window.YT.PlayerState.ENDED);
 
   return (
-    <Box sx={{ position: 'relative', height: '100%', backgroundColor: '#000' }}>
+    <Box sx={{ position: 'relative', width: '100%', paddingTop: '56.25%', backgroundColor: '#000' }}>
       {!isPlayerReady && (
         <Box sx={{
             position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
@@ -94,7 +101,6 @@ const DistractionFreePlayer = forwardRef(({ videoId, onNext, onPrevious, onEnded
         onStateChange={handlePlayerStateChange}
         iframeClassName="absolute top-0 left-0 w-full h-full"
         className="h-full"
-        key={videoId}
       />
       {shouldShowOverlay && (
         <Box
@@ -115,11 +121,11 @@ const DistractionFreePlayer = forwardRef(({ videoId, onNext, onPrevious, onEnded
             color: 'white',
           }}
         >
-          <Typography variant="h6">
+          <Typography variant="h6" sx={{ fontSize: { xs: '1.2rem', md: '1.5rem' } }}>
             {playerState === window.YT.PlayerState.ENDED ? "Video Ended" : "Click to Play"}
           </Typography>
-          <Typography variant="subtitle2">Happy Learning!</Typography>
-          <Typography variant="subtitle2">--Kamrul Hasan--</Typography>
+          <Typography variant="subtitle2" sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}>Happy Learning!</Typography>
+          <Typography variant="subtitle2" sx={{ fontSize: { xs: '0.8rem', md: '1rem' } }}>--Kamrul Hasan--</Typography>
         </Box>
       )}
     </Box>
