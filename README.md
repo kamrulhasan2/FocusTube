@@ -162,11 +162,7 @@ FocusTube is a single-page web application (SPA) built using React. It enhances 
 
 ### 4.2 Architecture Diagram (To be added)
 - **FocusTube Application** 
-![alt text](https://github.com/kamrulhasan2/FocusTube/blob/master/resources/FocusTube%20App.png?raw=true)
 
-- **FocusTube Course Player** 
-![alt text](https://github.com/kamrulhasan2/FocusTube/blob/master/resources/FocusTube%20course%20player.png?raw=true)
----
 
 ## 5. Future Enhancements
 

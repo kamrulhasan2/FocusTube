@@ -1,116 +1,67 @@
-import { useEffect } from "react";
-import { BrowserRouter, Route, Routes, useParams } from "react-router";
-import CssBaseline from '@mui/material/CssBaseline';
-import usePlaylists from "./hooks/usePlalists";
-import { Button, Container, Grid, Typography } from "@mui/material";
-import Navbar from "./components/navbar";
-import PlaylistCardItem from "./components/playlist-card-item";
-import { useStoreActions } from "easy-peasy";
+import { useEffect, lazy, Suspense } from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { useStoreRehydrated, useStoreActions, StoreProvider } from 'easy-peasy';
+import { Container, CircularProgress, CssBaseline, ThemeProvider, createTheme } from '@mui/material';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import HomePage from './pages/HomePage';
+import { store } from './store';
+import NotFoundPage from './pages/NotFoundPage';
+import SavedPlaylistsPage from './pages/SavePlaylistsPage';
+import FavoritesPage from './pages/FavoritesPage';
+import BlogPage from './pages/BlogPage';
 
-const playlistId = 'PL_XxuZqN0xVD0op-QDEgyXFA4fRPChvkl';
-// Create a Homepage component for testing purposes
+const PlaylistViewerPage = lazy(() => import('./pages/PlaylistViewerPage'));
 
-const Homepage = ({playlistArray})=> {
-  const playlists = useStoreActions(actions => actions.playlists);
-  useEffect(()=>{
-    playlists.getPlaylist(playlistId);
-    
-  },[])
+const theme = createTheme({
+  palette: {
+    primary: { main: '#1976d2' },
+    secondary: { main: '#dc004e' },
+  },
+});
 
-  return(
-    <Container maxWidth="lg">
-            
-    {
-      playlistArray.length > 0 &&(
-        <Grid container alignItems={'stretch'}>
-          {
-            playlistArray.map((item)=>(
-              <Grid key={item.playlistId} item xs={12} md={6} lg={4} mb={2}>
-                <PlaylistCardItem 
-                  key={item.playlistId}
-                  playlistId={item.playlistId}
-                  playlistThumbnail={item.playlistThumbnail}
-                  playlistTitle={item.playlistTitle}
-                  channelTitle={item.channelTitle}
-                />
-              </Grid>
-            ))
-          }
-        </Grid>
-      )
+function WaitForStateRehydration({ children }) { 
+  const isRehydrated = useStoreRehydrated();
+  const initializeStore = useStoreActions((actions) => actions.app.initializeStore);
+
+  useEffect(() => {
+    if (isRehydrated) {
+      initializeStore();
     }
+  }, [isRehydrated, initializeStore]);
 
-  </Container>
-  )
-}
-
-// creating a NotFound component for testing purposes
-
-const NotFound = () => {
-  return(
-    <Container maxWidth="lg">
-      <Typography variant="h1" align="center" mt={5}>
-        404 Not Found
-      </Typography>
+  return isRehydrated ? children : (
+    <Container sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <CircularProgress />
     </Container>
-  )
+  );
 }
 
-
-// creating a PlayerPage component for testing purposes
-
-const PlayerPage = ({playlists}) => {
-  const {playlistId} = useParams();
-  const currentPlaylist = playlists[playlistId];
-
-  console.log(currentPlaylist);
-
-  if(!currentPlaylist) return;
-
-  return(
-    <Container maxWidth="lg">
-      <Typography variant="h2" align="center" mt={5}>
-        {currentPlaylist.playlistTitle}
-      </Typography>
-
-      <Typography variant="h4" align="center" mt={3}>
-        <img src={currentPlaylist.playlistThumbnail.url} alt={currentPlaylist.playlistTitle} height={350} width={720}/>  
-      </Typography>
-
-      <Typography variant="body1" align="center" mt={3}>
-        {currentPlaylist.playlistDescription}
-      </Typography>
-    </Container>
-  )
-}
-
-
-
-const App = () => {
-
-  const {getPlaylistById, playlists,error} = usePlaylists();
-
-  const playlistArray = Object.values(playlists);
-
-  if(error){
-    console.log('Error: ', error);
-  }
-
+function App() {
   return (
-    <BrowserRouter>
-      <CssBaseline />
-      <Navbar getPlaylistById={getPlaylistById} />
-
-      <Routes>
-        <Route path="/" element={<Homepage playlistArray={playlistArray} />} />
-        <Route path="*" element={<NotFound />} />
-        <Route path="/player/:playlistId" 
-          element={<PlayerPage playlists={playlists} />} />
-      </Routes>
-
-     
-    </BrowserRouter>
-  )
+    <StoreProvider store={store}>
+      <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <WaitForStateRehydration>
+            <Router>
+                <Header />
+                  <Suspense fallback={<Container sx={{ textAlign: 'center', py: 5 }}><CircularProgress /></Container>}>
+                    <Routes>
+                      <Route path="/" element={<HomePage />} />
+                      <Route path="/playlist/:playlistId" element={<PlaylistViewerPage />} />
+                      <Route path="/blog" element={<BlogPage />} />
+                      <Route path="/saved" element={<SavedPlaylistsPage />} />
+                      <Route path="/favorites" element={<FavoritesPage />} />
+                      <Route path="/404" element={<NotFoundPage />} />
+                      <Route path="*" element={<Navigate replace to="/404" />} />
+                    </Routes>
+                  </Suspense>
+                <Footer />
+            </Router>
+          </WaitForStateRehydration>        
+      </ThemeProvider>
+    </StoreProvider>
+  );
 }
 
 export default App;
