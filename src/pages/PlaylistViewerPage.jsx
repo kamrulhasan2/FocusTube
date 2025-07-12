@@ -29,11 +29,6 @@ const PlaylistViewerPage = () => {
 
   // Combined effect to manage loading and initial video selection
   useEffect(() => {
-    console.log('PlaylistViewerPage: useEffect [playlistId, currentPlaylist, playbackState, currentVideoId]');
-    console.log('  playlistId:', playlistId);
-    console.log('  currentPlaylist:', currentPlaylist ? currentPlaylist.title : 'N/A');
-    console.log('  currentVideoId (before logic):', currentVideoId);
-
     if (!playlistId) {
       navigate('/');
       return;
@@ -41,38 +36,29 @@ const PlaylistViewerPage = () => {
 
     // If the playlist data isn't loaded yet, fetch it.
     if (!currentPlaylist) {
-      console.log('  Loading playlist data...');
       loadPlaylist(playlistId);
       setLastWatched(playlistId);
     } 
     // If the playlist IS loaded but a video hasn't been chosen yet, choose one.
     else if (currentVideoId === null) { 
-      console.log('  Playlist loaded, determining initial video...');
       const savedState = playbackState[playlistId];
-      console.log('  Saved playbackState for current playlist:', savedState);
 
       if (savedState && savedState.videoId && currentPlaylist.videos.some(v => v.id === savedState.videoId)) {
-        console.log('  Setting video from saved state:', savedState.videoId, 'at', savedState.timestamp);
         setCurrentVideoId(savedState.videoId);
         setStartSeconds(savedState.timestamp || 0);
       } else if (currentPlaylist.videos.length > 0) {
-        console.log('  Setting video to first in playlist:', currentPlaylist.videos[0].id);
         setCurrentVideoId(currentPlaylist.videos[0].id);
         setStartSeconds(0);
       } else {
-        console.log('  No videos in playlist or no valid saved state.');
       }
     }
-    console.log('  currentVideoId (after logic):', currentVideoId);
   },[playlistId, currentPlaylist, loadPlaylist, setLastWatched, navigate, playbackState]);
 
   // Effect to save the playback state on unmount
   useEffect(() => {
     return () => {
-      console.log('PlaylistViewerPage: Cleanup effect (saving playback state)');
       if (playerRef.current && playlistId && currentVideoId) {
         const timestamp = playerRef.current.getCurrentTime();
-        console.log('  Saving state:', { playlistId, videoId: currentVideoId, timestamp });
         if (timestamp > 0) {
           updatePlaybackState({ playlistId, videoId: currentVideoId, timestamp });
         }
@@ -81,9 +67,7 @@ const PlaylistViewerPage = () => {
   }, [playlistId, currentVideoId, updatePlaybackState]);
 
   const handleSelectVideo = (videoId) => {
-    console.log('handleSelectVideo called with:', videoId);
     if (currentVideoId !== videoId) {
-        console.log('  Changing currentVideoId from', currentVideoId, 'to', videoId);
         setCurrentVideoId(videoId);
         setStartSeconds(0); // Always start new videos from the beginning
     }
@@ -142,8 +126,8 @@ const PlaylistViewerPage = () => {
       {currentPlaylist.channelTitle && <Typography variant="subtitle1" color="text.secondary" gutterBottom>By: {currentPlaylist.channelTitle}</Typography>}
       {error && <Alert severity="warning" sx={{ mb: 2 }}>{error}</Alert>}
 
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, height: { md: '78vh' } }}>
-        <Box sx={{ flexGrow: 1, minWidth: 0 }}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, height: { xs: 'calc(100vh - 112px)', md: 'auto' } }}>
+        <Box sx={{ flexGrow: { xs: 0, md: 1 }, minWidth: 0, position: { md: 'sticky' }, top: { md: 80 }, height: { xs: '200px', md: 'fit-content' } }}>
           {currentVideoId && (
             <LazyPlayer
               ref={playerRef}
@@ -153,7 +137,7 @@ const PlaylistViewerPage = () => {
             />
           )}
         </Box>
-        <Box sx={{ width: { xs: '100%', md: '350px' }, height: '100%', display: 'flex', flexDirection: 'column' }}>
+        <Box sx={{ width: { xs: '100%', md: '350px' }, height: { xs: 'calc(100% - 200px)', md: 'calc(100vh - 200px)' }, display: 'flex', flexDirection: 'column' }}>
           <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1, borderBottom: '1px solid #ddd' }}>
             <Button onClick={handlePreviousVideo} startIcon={<SkipPreviousIcon />}>Previous</Button>
             <Button onClick={handleNextVideo} endIcon={<SkipNextIcon />}>Next</Button>
