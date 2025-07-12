@@ -4,9 +4,9 @@
 
 # Project Name: FocusTube
 
-**Version 1.0**
+**Version 2.0.1**
 
-**Date:** [ 05/03/2025 ]
+**Updated Date:** [ 12/07/2025 ]
 
 ## **Prepared by:**
 
@@ -50,137 +50,202 @@ Dhaka City College
 
 ### 1.1 Purpose
 
-FocusTube is a distraction-free YouTube course viewer designed to help users watch educational playlists without interruptions. It allows users to save, manage, and track their learning progress efficiently.
+FocusTube is a distraction-free YouTube course viewer aimed at helping users watch and manage educational playlists with minimal interruptions. This update includes advanced form handling, validation, video playback enhancements, and improved state management.
 
 ### 1.2 Scope
 
-FocusTube provides an ad-free, distraction-free interface where users can:
+FocusTube provides a clean, ad-free interface with the following features:
 
-- Paste a YouTube playlist link/ID and watch videos without recommendations or unrelated content.
-- Save playlists for later access.
-- Mark playlists as favorites.
-- Track the last-watched playlist.
-- Cache fetched playlists to reduce unnecessary API calls.
-- Refresh cached playlists with a time-limited refresh button.
+- Paste YouTube playlist link/ID and watch videos distraction-free.
+- Save, favorite, and track playlists.
+- Use easy-peasy for managing app state.
+- Forms handled with react-hook-form and validated using yup.
+- Videos played using react-youtube-player with minimal branding and distractions.
 
-### 1.3 Definitions, Acronyms, and Abbreviations
+### 1.3 Definitions
 
-- **YouTube API:** Interface for fetching video and playlist data from YouTube.
-- **MUI (Material UI):** A React component library for UI design.
-- **React-Router:** Library for managing navigation within the React application.
-- **localStorage:** Browser storage for saving user data.
-- **Cache:** Temporary storage of fetched API data to minimize redundant requests.
-
-### 1.4 References
-
-- YouTube API Documentation: https://developers.google.com/youtube/v3
-- React Documentation: [https://reactjs.org](https://reactjs.org/)
-- MUI Documentation: [https://mui.com](https://mui.com/)
+- **easy-peasy**: Simplified state management for React.
+- **react-hook-form**: Lightweight form handling library.
+- **yup**: JavaScript schema builder for value parsing and validation.
+- **react-youtube-player**: Component to embed and control YouTube players.
+- **localStorage**: Client-side key-value storage.
 
 ---
 
-## 2. Overall Description
+### 2. Overall Description
 
 ### 2.1 Product Perspective
 
-FocusTube is a single-page web application (SPA) built using React. It enhances the YouTube learning experience by removing distractions and providing a structured way to track progress.
+FocusTube is a modern React SPA built with Vite and enhanced with state management, smooth forms, and minimalistic YouTube integration.
 
 ### 2.2 User Characteristics
 
-- **Students & Learners:** Those who want to focus on educational content.
-- **Professionals:** Individuals following professional development courses.
-- **Content Consumers:** Users who prefer a clean and distraction-free experience while watching playlists.
+Same as before: students, professionals, and focused content consumers.
 
 ### 2.3 Constraints
 
-- Requires an active internet connection.
-- Limited to YouTube playlists (no standalone video support initially).
-- API rate limits from YouTube may affect usage.
-- Cached data should be refreshed only within a controlled time frame (e.g., once every 24 hours).
+- No backend; everything is client-side.
+- Relies on YouTube’s API and user internet connection.
+- Video playback controlled via react-youtube-player.
+- Cannot block ads (limited by YouTube’s TOS).
 
-### 2.4 Assumptions and Dependencies
+### 2.4 Assumptions
 
-- The YouTube API will remain available and free to use within its quota limits.
-- Users will have valid YouTube playlist links.
-- The application will be accessed via modern browsers supporting React and localStorage.
+- Users will have playlist links.
+- Modern browsers required (ES6+, React support).
 
 ---
 
-## 3. Specific Requirements
+### 3. Specific Requirements
 
 ### 3.1 Functional Requirements
 
 ### 3.1.1 Playlist Management
 
-- Users can paste a YouTube playlist link/ID to load a playlist.
-- Users can save playlists for future viewing.
-- Users can mark playlists as favorites.
-- Users can track the last-watched playlist.
-- Show an alert prompting users to enter a playlist ID.
-- Check if the playlist ID is already in cache before making an API call.
-- Fetch data from the YouTube API and store it in cache if not already available.
-- Add a refresh button to update the cached playlist data (limited to once every 24 hours).
+- Paste playlist link/ID.
+- Save and favorite playlists.
+- Track last-watched playlists.
+- Alert on missing input.
+- Cache check before API request.
+- Refresh cached data (once/24 hrs).
 
 ### 3.1.2 Video Player
 
-- Embedded YouTube player will play videos in order.
-- No recommended videos or YouTube distractions.
-- Users can control playback (play, pause, next, previous).
+- Play videos using `react-youtube-player`.
+- Hide branding, related videos, and show clean player UI.
+- Player settings:
+    - `modestbranding: 1`
+    - `rel: 0`
+    - `controls: 1` or custom as needed.
+- Control playback (play, pause, next, previous).
 
-### 3.1.3 Data Storage
+### 3.1.3 Form Handling
 
-- Playlists and favorites will be stored in **localStorage**.
-- Last-watched playlist will be automatically updated.
-- Cached playlists will be stored locally to minimize redundant API requests.
+- Use `react-hook-form` for user input.
+- Validate all form input using `yup`.
 
-### 3.1.4 Navigation
+### 3.1.4 State Management
 
-- Home page for pasting playlist links.
-- Playlist viewer page for watching videos.
-- Saved playlists page for managing saved content.
+- Use `easy-peasy` for managing global state:
+    - Saved playlists
+    - Favorites
+    - Last watched
+    - UI preferences (e.g. dark mode)
 
-### 3.2 Non-Functional Requirements
+### 3.1.5 Data Storage
 
-- **Performance:** The app should load playlists quickly with minimal delay.
-- **Usability:** Simple and intuitive UI using MUI components.
-- **Scalability:** Should handle multiple playlists without performance issues.
-- **Reliability:** App should function without crashing even with multiple saved playlists.
-- **Security:** User data should be stored locally without third-party access.
+- Use `localStorage` for:
+    - Saved playlists
+    - Cache
+    - Last watched video
 
----
+### 3.1.6 Navigation
 
-## 4. System Design & Technology Stack
-
-### 4.1 Technology Stack
-
-- **Frontend:** React.js
-- **UI Library:** MUI
-- **State Management:** `useState`, `useEffect`
-- **Routing:** React-Router
-- **Data Storage:** localStorage
-- **External API:** YouTube API
-
-### 4.2 Architecture Diagram (To be added)
-- **FocusTube Application** 
-
-
-## 5. Future Enhancements
-
-- **Progress Tracking:** Users can see how much of a playlist they have completed.
-- **Custom Tags:** Users can categorize their saved playlists.
-- **Dark Mode:** UI theme customization.
-- **Multi-Device Sync:** Sync playlists using a backend (Firebase or other DB).
+- Home (playlist input)
+- Playlist viewer
+- Saved & favorite playlists
 
 ---
 
-## 6. Conclusion
+### 4. Non-Functional Requirements
 
-FocusTube aims to improve the learning experience by removing distractions from YouTube. By leveraging React, YouTube API, and localStorage, it provides a seamless way for users to focus on their courses. Future improvements will enhance user engagement and usability.
+- **Performance**: Optimized via Vite; fast loading.
+- **Usability**: Clean MUI + Tailwind UI.
+- **Security**: No third-party data sync (yet).
+- **Scalability**: Efficient cache & state management.
+- **Reliability**: Error handling for all user actions and API calls.
 
 ---
 
-## 7. References
+### 5. Technology Stack
+
+| Component | Tool |
+| --- | --- |
+| Frontend | React + Vite |
+| UI | MUI + Tailwind CSS |
+| State Management | easy-peasy |
+| Form Handling | react-hook-form |
+| Validation | yup |
+| Routing | react-router |
+| Video Player | react-youtube-player |
+| Storage | localStorage |
+| API | YouTube API |
+
+---
+
+### 6 Architecture Diagram
+
+![FocusTube2.0.1.jpg](https://github.com/kamrulhasan2/FocusTube/blob/master/resources/FocusTube2.0.1.jpg)
+
+---
+
+### 🌲 **FocusTube Component Tree**
+
+```powershell
+
+App
+├── Layout
+│   ├── Header
+│   ├── Sidebar (optional)
+│   └── Footer (optional)
+├── Routes
+│   ├── HomePage
+│   │   └── PlaylistForm         ← Form to paste playlist link/ID
+│   │       ├── react-hook-form + yup
+│   │       └── PlaylistInput
+│   ├── PlaylistViewerPage
+│   │   ├── PlaylistHeader       ← Title, channel, refresh button
+│   │   ├── DistractionFreePlayer
+│   │   │   └── react-youtube-player
+│   │   ├── VideoList
+│   │   │   └── VideoItem (mapped list)
+│   │   └── PlaybackControls     ← Play/Pause/Next/Prev 
+│   ├── SavedPlaylistsPage
+│   │   └── PlaylistCard (mapped list)
+│   ├── FavoritesPage
+│   │   └── PlaylistCard (favorited only)
+│   ├── NotFoundPage
+├── GlobalState (easy-peasy store)
+│   ├── playlists
+│   ├── favorites
+│   ├── lastWatched
+│   └── ui (theme, etc.)
+└── Modals & Alerts
+    ├── ConfirmDeleteModal
+    ├── PlaylistExistsAlert
+    └── ErrorBoundary
+
+```
+
+---
+
+### 🧠 Notes:
+
+- **`DistractionFreePlayer`** wraps `react-youtube-player` with minimal branding and clean layout.
+- **State** is managed globally via `easy-peasy`, including:
+    - Saved playlists
+    - Favorites
+    - Last watched video
+- **Forms** are handled via `react-hook-form`, validated by `yup`.
+- Pages are routed via **React Router**.
+- Styling uses **MUI + Tailwind CSS**.
+
+### 7. Future Enhancements
+
+- Playlist progress tracking.
+- Custom tags and categories.
+- UI themes / dark mode toggle.
+- Multi-device sync (using Firebase or other DB).
+- Notification system (reminders before upcoming videos).
+
+---
+
+### 7. References
 
 - YouTube API Docs: https://developers.google.com/youtube/v3
 - React Documentation: [https://reactjs.org](https://reactjs.org/)
 - MUI Documentation: [https://mui.com](https://mui.com/)
+
+### 9. Conclusion
+
+FocusTube continues to evolve into a focused, structured video learning tool. With improved tech stack integration and distraction-reduction features, it serves as a productivity-boosting companion for serious learners.
