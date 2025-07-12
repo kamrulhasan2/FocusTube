@@ -14,8 +14,10 @@ const Header = () => {
 
   const drawer = (
     <Box sx={{ textAlign: 'center' }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
+      <Typography variant="h6" sx={{ my: 2 , color: '#00fff5' }}>
         FocusTube
+        <br />
+        <small>Learn Without Distraction</small>
       </Typography>
       <List>
         <ListItem disablePadding>
