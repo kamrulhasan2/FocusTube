@@ -113,7 +113,7 @@ const PlaylistViewerPage = () => {
   return (
     <Container maxWidth="lg" sx={{ py: 3 }}>
       <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
-        <Typography variant="h4" component="h1">{currentPlaylist.title}</Typography>
+        <Typography variant="h4" component="h1" sx={{ fontSize: { xs: '1.2rem', md: '1.66rem' } }} >{currentPlaylist.title}</Typography>
         <Box>
           <IconButton onClick={handleRefresh} aria-label="refresh playlist" title="Refresh Playlist (once/24h)">
             <RefreshIcon />
@@ -123,10 +123,10 @@ const PlaylistViewerPage = () => {
           </IconButton>
         </Box>
       </Box>
-      {currentPlaylist.channelTitle && <Typography variant="subtitle1" color="text.secondary" gutterBottom>By: {currentPlaylist.channelTitle}</Typography>}
+      {currentPlaylist.channelTitle && <Typography variant="subtitle1" color="text.secondary" sx={{ fontSize: { xs: '0.7rem', md: '0.9rem' } }} gutterBottom >By: {currentPlaylist.channelTitle}</Typography>}
       {error && <Alert severity="warning" sx={{ mb: 2 }}>{error}</Alert>}
 
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, height: { xs: 'calc(100vh - 112px)', md: 'auto' } }}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 2, height: { xs: 'calc(100vh - 10px)', md: 'auto'} }}>
         <Box sx={{ flexGrow: { xs: 0, md: 1 }, minWidth: 0, position: { md: 'sticky' }, top: { md: 80 }, height: { xs: '200px', md: 'fit-content' } }}>
           {currentVideoId && (
             <LazyPlayer
@@ -137,12 +137,12 @@ const PlaylistViewerPage = () => {
             />
           )}
         </Box>
-        <Box sx={{ width: { xs: '100%', md: '350px' }, height: { xs: 'calc(100% - 200px)', md: 'calc(100vh - 200px)' }, display: 'flex', flexDirection: 'column' }}>
-          <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1, borderBottom: '1px solid #ddd' }}>
+        <Box sx={{ width: { xs: '100%', md: '450px' }, height: { xs: 'calc(100% - 200px)', md: 'calc(100vh - 200px)'}, display: 'flex', flexDirection: 'column' }}>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', p: 1, borderBottom: '1px solid #ddd', }}>
             <Button onClick={handlePreviousVideo} startIcon={<SkipPreviousIcon />}>Previous</Button>
             <Button onClick={handleNextVideo} endIcon={<SkipNextIcon />}>Next</Button>
           </Box>
-          <Box sx={{ overflowY: 'auto', flexGrow: 1 }}>
+          <Box sx={{ overflowY: 'auto', flexGrow: 1, mt: 1, p: 1, borderRadius: 1, bgcolor: '#f5f5f5' }}>
             <VideoList
               videos={currentPlaylist.videos}
               currentVideoId={currentVideoId}

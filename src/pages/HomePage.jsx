@@ -11,10 +11,10 @@ const HomePage = () => {
 
   return (
     <Container component="main" maxWidth="md" sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center', py: 4 }}>
-      <Typography variant="h3" component="h1" gutterBottom sx={{ fontSize: { xs: '2.5rem', md: '3rem' } }}>
+      <Typography variant="h3" component="h1" gutterBottom sx={{ fontSize: { xs: '2.1rem', md: '3rem' } }}>
         FocusTube
       </Typography>
-      <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontSize: { xs: '1rem', md: '1.25rem' } }}>
+      <Typography variant="subtitle1" color="text.secondary" gutterBottom sx={{ fontSize: { xs: '0.9rem', md: '1.25rem' } }}>
         Your distraction-free YouTube course viewer.
       </Typography>
 
