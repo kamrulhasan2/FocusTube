@@ -27,7 +27,7 @@ const Header = () => {
         </ListItem>
         <ListItem disablePadding>
           <ListItemButton component={RouterLink} to="/blog">
-            <ListItemText primary="Blog" sx={{ color: 'white' }} />
+            <ListItemText primary="User Manual" sx={{ color: 'white' }} />
           </ListItemButton>
         </ListItem>
         <ListItem disablePadding>
@@ -55,7 +55,7 @@ const Header = () => {
 
         <Box sx={{ display: { xs: 'none', md: 'block' } }}>
           <Button color="inherit" component={RouterLink} to="/">Home</Button>
-          <Button color="inherit" component={RouterLink} to="/blog">Blog</Button>
+          <Button color="inherit" component={RouterLink} to="/blog">User Manual</Button>
           <Button color="inherit" component={RouterLink} to="/saved">Saved</Button>
           <Button color="inherit" component={RouterLink} to="/favorites">Favorites</Button>
         </Box>
